@@ -16,7 +16,8 @@ return {
   config = function()
     local cmp = require 'cmp'
     local cmp_lsp = require 'cmp_nvim_lsp'
-    local capabilities = vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
+    local capabilities = vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(),
+      cmp_lsp.default_capabilities())
 
     require('fidget').setup {}
     require('mason').setup()
@@ -26,6 +27,7 @@ return {
         'rust_analyzer',
         'gopls',
         'tsserver',
+        'biome'
       },
       handlers = {
         function(server_name) -- default handler (optional)
@@ -53,6 +55,10 @@ return {
           vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {})
         end,
       },
+    }
+    -- Set up Biome
+    require('lspconfig').biome.setup {
+      capabilities = capabilities,
     }
 
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
