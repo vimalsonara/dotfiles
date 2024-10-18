@@ -23,10 +23,10 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        javascript = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
+        javascript = {},
+        javascriptreact = {},
+        typescript = {},
+        typescriptreact = {},
         html = { { "prettierd", "prettier" } },
         css = { { "prettierd", "prettier" } },
         json = { { "prettierd", "prettier" } },
@@ -34,6 +34,7 @@ return {
         yaml = { { "prettierd", "prettier" } },
         mdx = { { "prettierd", "prettier" } },
       },
+      stop_after_first = true
     },
     config = function(_, opts)
       local conform = require("conform")
