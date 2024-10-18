@@ -26,7 +26,7 @@ return {
         'lua_ls',
         'rust_analyzer',
         'gopls',
-        'tsserver',
+        'ts_ls',
         'biome'
       },
       handlers = {
@@ -49,7 +49,7 @@ return {
               },
             },
           }
-          lspconfig.tsserver.setup {}
+          lspconfig.ts_ls.setup {}
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
           vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {})
