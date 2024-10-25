@@ -13,20 +13,12 @@ return {
       },
     },
     opts = {
-      notify_on_error = true, -- Change this to true for error notifications
-      format_on_save = function(bufnr)
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 2000,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        javascript = {},
-        javascriptreact = {},
-        typescript = {},
-        typescriptreact = {},
+        javascript = { 'biome', 'prettierd', 'prettier' },
+        javascriptreact = { 'biome', 'prettierd', 'prettier' },
+        typescript = { 'biome', 'prettierd', 'prettier' },
+        typescriptreact = { 'biome', 'prettierd', 'prettier' },
         html = { { "prettierd", "prettier" } },
         css = { { "prettierd", "prettier" } },
         json = { { "prettierd", "prettier" } },
@@ -34,7 +26,14 @@ return {
         yaml = { { "prettierd", "prettier" } },
         mdx = { { "prettierd", "prettier" } },
       },
-      stop_after_first = true
+      format_on_save = function(bufnr)
+        local disable_filetypes = { c = true, cpp = true }
+        return {
+          timeout_ms = 2000,
+          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+        }
+      end,
+      notify_on_error = true,
     },
     config = function(_, opts)
       local conform = require("conform")
