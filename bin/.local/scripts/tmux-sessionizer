@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+#------------------------------------------------------------------------------
+# Initial Checks
+#------------------------------------------------------------------------------
+
+# Check if tmux is installed
+if ! command -v tmux &> /dev/null; then
+    echo "tmux is not installed. Please install it first."
+    exit 1
+fi
+
+#------------------------------------------------------------------------------
+# Project Finding Function
+#------------------------------------------------------------------------------
+
+# Function to find project directories
+find_projects() {
+    # Add or modify these paths based on where you keep your projects
+    local search_dirs=(
+        "$HOME/projects"
+        "$HOME/work"
+        "$HOME/personal"
+    )
+    
+    # Search through each directory
+    for dir in "${search_dirs[@]}"; do
+        if [ -d "$dir" ]; then
+            find "$dir" -mindepth 1 -maxdepth 1 -type d
+        fi
+    done
+}
+
+#------------------------------------------------------------------------------
+# Project Selection Logic
+#------------------------------------------------------------------------------
+
+# If no argument is provided, use fzf to select a project
+if [[ $# -eq 0 ]]; then
+    # Check if fzf is installed
+    if ! command -v fzf &> /dev/null; then
+        echo "fzf is not installed. Please install it first."
+        exit 1
+    fi
+    
+    # Use fzf for interactive selection
+    selected=$(find_projects | fzf)
+else
+    # Use provided argument
+    selected=$1
+fi
+
+# Exit if no directory is selected
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+#------------------------------------------------------------------------------
+# Session Management
+#------------------------------------------------------------------------------
+
+# Get the directory name for the session name
+selected_name=$(basename "$selected" | tr . *)
+
+# Check if tmux is running
+if ! tmux has-session 2>/dev/null; then
+    # Start a new tmux server if none exists
+    tmux new-session -d -s "$selected_name" -c "$selected"
+    tmux attach -t "$selected_name"
+    exit 0
+fi
+
+# Check if session already exists
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+    # Create a new session
+    tmux new-session -d -s "$selected_name" -c "$selected"
+fi
+
+#------------------------------------------------------------------------------
+# Session Attachment
+#------------------------------------------------------------------------------
+
+# If we're not already in tmux, attach to the session
+if [[ -z $TMUX ]]; then
+    tmux attach -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi
