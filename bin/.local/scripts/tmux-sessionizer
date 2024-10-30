@@ -18,6 +18,7 @@ find_projects() {
         "$HOME/projects"
         "$HOME/work"
         "$HOME/personal"
+        "$HOME/dotfiles"
     )
     
     # Search through each directory
