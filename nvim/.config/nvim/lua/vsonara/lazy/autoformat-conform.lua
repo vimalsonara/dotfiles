@@ -49,11 +49,11 @@ return {
       -- }
 
       -- Log when format_on_save is triggered
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = function()
-          print("Format on save triggered for buffer: " .. vim.fn.bufname())
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   callback = function()
+      --     print("Format on save triggered for buffer: " .. vim.fn.bufname())
+      --   end,
+      -- })
     end,
   },
 }
