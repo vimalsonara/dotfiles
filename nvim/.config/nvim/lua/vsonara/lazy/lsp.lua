@@ -53,6 +53,7 @@ return {
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
           vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {})
+          vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Diagnostic Float' })
         end,
       },
     }
@@ -86,7 +87,7 @@ return {
     vim.diagnostic.config {
       -- update_in_insert = true,
       float = {
-        focusable = false,
+        focusable = true,
         style = 'minimal',
         border = 'rounded',
         source = 'always',
