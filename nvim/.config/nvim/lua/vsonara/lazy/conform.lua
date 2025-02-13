@@ -47,6 +47,14 @@ return {
       --     return {}
       --   end
       -- }
+      --
+      -- conform.formatters.biome = {
+      --   prepend_args = function()
+      --     print("Biome formatter called")
+      --     return {}
+      --   end
+      -- }
+
 
       -- Log when format_on_save is triggered
       -- vim.api.nvim_create_autocmd("BufWritePre", {
