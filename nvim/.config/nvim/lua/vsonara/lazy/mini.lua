@@ -17,6 +17,15 @@ return {
 
       local surround = require 'mini.surround'
       surround.setup()
+
+      local indentscope = require 'mini.indentscope'
+      indentscope.setup()
+
+      local trailspace = require 'mini.trailspace'
+      trailspace.setup()
+
+      local move = require 'mini.move'
+      move.setup()
     end
   },
 }
