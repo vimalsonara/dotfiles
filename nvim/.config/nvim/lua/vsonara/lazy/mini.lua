@@ -12,8 +12,8 @@ return {
       local diff = require 'mini.diff'
       diff.setup()
 
-      local statusline = require 'mini.statusline'
-      statusline.setup { use_icons = true }
+      -- local statusline = require 'mini.statusline'
+      -- statusline.setup { use_icons = true }
 
       local ai = require 'mini.ai'
       ai.setup()
