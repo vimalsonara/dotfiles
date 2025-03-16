@@ -14,12 +14,13 @@
     ],
     "modules-right": [
         "tray",
+        "keyboard-state",
         "pulseaudio",
         "cpu",
         "memory",
         "temperature",
         "network",
-        "keyboard-state",
+        "bluetooth",
         "battery",
         "battery#bat2",
         "clock",
@@ -31,13 +32,14 @@
         "format": "{name}",
     },
     "keyboard-state": {
-        "numlock": true,
+        "numlock": false,
         "capslock": true,
         "format": "{name} {icon}",
         "format-icons": {
             "locked": "",
             "unlocked": ""
-        }
+        },
+        "device-path": "/dev/input/event16"
     },
     "hyprland/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -148,6 +150,14 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "bluetooth": {
+      "format": " {status}",
+      "format-disabled": "", // an empty format will hide the module
+      "format-connected": " {num_connections} connected",
+      "tooltip-format": "{controller_alias}\t{controller_address}",
+      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
