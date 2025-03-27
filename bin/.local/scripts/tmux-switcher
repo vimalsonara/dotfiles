@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+#------------------------------------------------------------------------------
+# Initial Checks
+#------------------------------------------------------------------------------
+# Check if tmux is installed
+if ! command -v tmux &> /dev/null; then
+    echo "tmux is not installed. Please install it first."
+    exit 1
+fi
+
+# Check if fzf is installed
+if ! command -v fzf &> /dev/null; then
+    echo "fzf is not installed. Please install it first."
+    exit 1
+fi
+
+#------------------------------------------------------------------------------
+# Active Sessions Listing Function
+#------------------------------------------------------------------------------
+# Function to list active tmux sessions
+list_tmux_sessions() {
+    # List all tmux sessions, removing the current session if we're in tmux
+    if [[ -n $TMUX ]]; then
+        tmux list-sessions | grep -v "$(tmux display-message -p '#S')" | cut -d: -f1
+    else
+        tmux list-sessions | cut -d: -f1
+    fi
+}
+
+#------------------------------------------------------------------------------
+# Session Selection Logic
+#------------------------------------------------------------------------------
+# Use fzf for interactive session selection
+selected=$(list_tmux_sessions | fzf)
+
+# Exit if no session is selected
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+#------------------------------------------------------------------------------
+# Session Switching
+#------------------------------------------------------------------------------
+# If we're not in a tmux session, attach to the selected session
+if [[ -z $TMUX ]]; then
+    tmux attach -t "$selected"
+else
+    # If we're already in a tmux session, switch to the selected session
+    tmux switch-client -t "$selected"
+fi
