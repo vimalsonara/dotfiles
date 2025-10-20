@@ -1,6 +1,13 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+local keymap = vim.keymap
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+keymap.set('n', '<leader>pv', vim.cmd.Ex)               -- thanks primeagen
+keymap.set("n", "<space><space>x", "<cmd>source %<CR>") -- execute all
+keymap.set("n", "<space>x", ":.lua<CR>")                -- execute current line
+keymap.set("v", "<space>x", ":.lua<CR>")                -- execute selected lines
+
 -- move selected text up-down
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
@@ -40,13 +47,3 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
