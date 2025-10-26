@@ -2,17 +2,18 @@ return {
 	{
 		"echasnovski/mini.nvim",
 		config = function()
-			local icons = require("mini.icons")
-			icons.setup()
+			require("mini.icons").setup()
 
-			local statusline = require("mini.statusline")
-			statusline.setup({ use_icons = true })
+			require("mini.git").setup()
 
-			local git = require("mini.git")
-			git.setup()
+			require("mini.diff").setup()
 
-			local diff = require("mini.diff")
-			diff.setup()
+			require("mini.tabline").setup()
+
+			require("mini.surround").setup()
+
+			-- local statusline = require("mini.statusline")
+			-- statusline.setup({ use_icons = true, config = {} })
 		end,
 	},
 }
